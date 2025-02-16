@@ -56,7 +56,7 @@ function RouteComponent() {
       <div className='text-center'>
         <div className='w-[100px] h-[100px] overflow-hidden rounded-full mb-2 mx-auto'>
           <label htmlFor='fileInput'>
-            <img src={formatImage(profile?.profile_image)} alt={profile?.first_name} className='w-full h-full object-cover object-top' />
+            <img src={formatImage(imagePreview)} alt={profile?.first_name} className='w-full h-full object-cover object-top' />
           </label>
         </div>
         <input type='file' id='fileInput' accept='image/*' className='hidden' {...fileForm.register('file', { onChange: onImageChange })} />
