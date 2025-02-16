@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, redirect, useMatchRoute } from '@tanstack/react-router';
 import Logo from '@/assets/Logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -75,6 +75,10 @@ function RouteComponent() {
 }
 
 function Navbar() {
+  const matchRoute = useMatchRoute();
+
+  const isActive = (path) => (matchRoute({ to: path }) ? 'text-red-500' : 'text-black');
+
   return (
     <nav className='flex items-center justify-between px-40 py-6 border'>
       <Link to={'/'}>
@@ -83,10 +87,10 @@ function Navbar() {
           <p>SIMS PPOB</p>
         </div>
       </Link>
-      <div className='flex items-center gap-2'>
-        <Link to={'/top-up'}>Top Up</Link>
-        <Link to={'/transaction'}>Transaction</Link>
-        <Link to={'/profile'}>Akun</Link>
+      <div className='flex items-center gap-10'>
+         <Link to={'/top-up'} className={isActive('/top-up')}>Top Up</Link>
+        <Link to={'/transaction'} className={isActive('/transaction')}>Transaction</Link>
+        <Link to={'/profile'} className={isActive('/profile')}>Akun</Link>
       </div>
     </nav>
   );

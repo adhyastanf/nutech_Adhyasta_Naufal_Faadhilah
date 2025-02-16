@@ -1,6 +1,5 @@
 import { getProfile, updatedImage, updatedProfile,  } from "@/lib/service";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export const fetchProfile = createAsyncThunk(
   "profile/fetchProfile",
@@ -69,6 +68,9 @@ const profileSlice = createSlice({
       state.error.fetchProfile = null;
       state.error.updateProfile = null;
       state.error.updateImage = null;
+      state.loading.fetchProfile = false;
+      state.loading.updateProfile = false;
+      state.loading.updateImage = false;
     },
   },
   extraReducers: (builder) => {

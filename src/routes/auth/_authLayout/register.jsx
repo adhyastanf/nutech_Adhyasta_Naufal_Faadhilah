@@ -8,6 +8,7 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { AtSign, Lock, UserRound } from 'lucide-react';
 
 export const Route = createFileRoute('/auth/_authLayout/register')({
   component: RouteComponent,
@@ -16,34 +17,39 @@ export const Route = createFileRoute('/auth/_authLayout/register')({
 function RouteComponent() {
   const dispatch = useDispatch();
   const { error, message, loading } = useSelector((state) => state.auth);
-  const {toast} = useToast();
-  const navigate = useNavigate({from:'/auth/register'})
+  const { toast } = useToast();
+  const navigate = useNavigate({ from: '/auth/register' });
 
   const fieldList = [
     {
       name: 'email',
       placeholder: 'masukkan email anda',
       type: 'email',
+      icon: <AtSign className='text-black/50' size={16} />,
     },
     {
       name: 'first_name',
       placeholder: 'nama depan',
       type: 'text',
+      icon: <UserRound className='text-black/50' size={16} />,
     },
     {
       name: 'last_name',
       placeholder: 'nama belakang',
       type: 'text',
+      icon: <UserRound className='text-black/50' size={16} />,
     },
     {
       name: 'password',
-      placeholder: 'masukkan password',
+      placeholder: 'buat password',
       type: 'password',
+      icon: <UserRound className='text-black/50' size={16} />,
     },
     {
       name: 'confirm_password',
       placeholder: 'konfirmasi password',
       type: 'password',
+      icon: <Lock className='text-black/50' size={16} />,
     },
   ];
 
@@ -63,7 +69,6 @@ function RouteComponent() {
         title: 'Registrasi Berhasil',
         description: message,
       });
-      navigate({ to: '/auth/login' });
       dispatch(clearMessage());
     }
     if (error) {
@@ -92,7 +97,7 @@ function RouteComponent() {
       <h2 className='text-xl font-bold text-center mb-6'>
         Lengkapi data untuk <br /> membuat akun
       </h2>
-      <CustomForm form={form} onSubmit={onSubmit} fields={fieldList} loading={loading} />
+      <CustomForm form={form} onSubmit={onSubmit} fields={fieldList} loading={loading} buttonText='Registrasi' />
       <p className='text-xs text-center mt-6'>
         sudah punya akun? login{' '}
         <Link to={'/auth/login'} className='font-medium text-red-600'>
