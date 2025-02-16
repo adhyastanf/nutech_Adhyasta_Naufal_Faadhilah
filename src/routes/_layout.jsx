@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router';
-import Logo from '@/assets/logo.png';
+import Logo from '@/assets/Logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchServices } from '@/store/services-slice';
