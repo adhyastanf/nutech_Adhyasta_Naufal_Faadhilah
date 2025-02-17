@@ -55,8 +55,6 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    if (!isEditing) return;
-
     if (loading?.updateProfile) {
       toast({
         title: 'Update profile Sedang Diproses',

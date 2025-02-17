@@ -7,13 +7,17 @@ import CustomCard from '@/components/reusable-component/custom-card';
 import { thousandSeparator } from '@/lib/format';
 import CustomPriceForm from '@/components/reusable-component/custom-price-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { topUpBalance } from '@/store/balance-slice';
+import { clearBalanceMessage, topUpBalance } from '@/store/balance-slice';
+import { useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { Banknote } from 'lucide-react';
 
 export const Route = createFileRoute('/_layout/top-up')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const {toast} = useToast()
   const dispatch = useDispatch()
   const {loading, message, error} = useSelector((state) => state.balance)
   const fieldList = [
@@ -22,8 +26,33 @@ function RouteComponent() {
       placeholder: 'masukkan nominal Top Up',
       type: 'text',
       useThousandSeparator: true,
+      icon:<Banknote size={16} />
     },
   ];
+
+  useEffect(() => {
+    if (loading?.topUpBalance) {
+      toast({
+        title: 'Topup Sedang Diproses',
+        description: 'Mohon tunggu...',
+      });
+    }
+    if (message?.topUpBalance) {
+      toast({
+        title: 'Topup Berhasil',
+        description: message?.topUpBalance,
+      });
+      dispatch(clearBalanceMessage());
+    }
+    if (error?.topUpBalance) {
+      toast({
+        title: 'Topup Gagal',
+        description: error,
+        variant: 'destructive',
+      });
+      dispatch(clearBalanceMessage());
+    }
+  }, [loading?.topUpBalance, message?.topUpBalance, error?.topUpBalance, toast, dispatch])
 
   const priceTopUp = [10000, 20000, 50000, 100000, 250000, 500000];
 
@@ -45,12 +74,12 @@ function RouteComponent() {
       <h2 className='text-lg font-semibold'>Nominal Top Up</h2>
       <div className='flex flex-col lg:flex-row gap-4'>
         <div className='lg:flex-[2] w-full'>
-          <CustomPriceForm form={form} onSubmit={onSubmit} fields={fieldList} loading={loading.topUpBalance} />
+          <CustomPriceForm form={form} onSubmit={onSubmit} fields={fieldList} loading={loading.topUpBalance} buttonText='Bayar' />
         </div>
 
-        <div className='lg:flex-1 w-full grid grid-cols-3 gap-2'>
+        <div className='lg:flex-1 w-full grid grid-cols-3 gap-2 self-start'>
           {priceTopUp.map((price, idx) => (
-            <CustomCard key={idx} className='p-0 rounded-sm' contentClassName='p-3 text-center' onClick={() => handleSelectPrice(price)}>
+            <CustomCard key={idx} className='p-0 rounded-sm cursor-pointer' contentClassName='p-3 text-center' onClick={() => handleSelectPrice(price)}>
               <p className='text-sm font-medium'>Rp{thousandSeparator(price)}</p>
             </CustomCard>
           ))}

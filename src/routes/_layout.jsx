@@ -9,6 +9,8 @@ import { formatImage, thousandSeparator } from '@/lib/format';
 import LoadingBalance from '@/components/loading/loading-balance';
 import CustomCard from '@/components/reusable-component/custom-card';
 import { fetchBalance } from '@/store/balance-slice';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/_layout')({
   component: RouteComponent,
@@ -28,6 +30,7 @@ export const Route = createFileRoute('/_layout')({
 });
 
 function RouteComponent() {
+  const [hide, setHide] = useState(true)
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.profile);
   const { services } = useSelector((state) => state.services);
@@ -63,8 +66,10 @@ function RouteComponent() {
           {isLoadingBalance ? (
             <LoadingBalance />
           ) : (
-            <CustomCard className="w-[60%] bg-[url('/Background.png')] bg-cover bg-center" title={<p className='text-sm text-white font-light'>Saldo anda</p>} footer={<p className='text-white text-sm'>Lihat Saldo</p>}>
-              <p className='font-semibold text-white text-2xl'>Rp {thousandSeparator(balance?.balance)}</p>
+            <CustomCard className="w-[60%] bg-[url('/Background.png')] bg-cover bg-center" title={<p className='text-sm text-white font-light'>Saldo anda</p>} footer={<Button className='text-white text-sm p-0 hover:bg-transparent' variant='ghost' onClick={() => setHide(!hide)}>Lihat Saldo'</Button>}>
+              <p className='font-semibold text-white text-2xl'>Rp
+
+              {hide ? '.......' : thousandSeparator(balance?.balance)}</p>
             </CustomCard>
           )}
         </div>

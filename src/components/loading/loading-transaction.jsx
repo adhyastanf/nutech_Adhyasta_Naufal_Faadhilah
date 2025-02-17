@@ -3,7 +3,7 @@ import { Skeleton } from '../ui/skeleton';
 
 export default function LoadingTransaction() {
   return (
-    <>
+    <div className='space-y-4'>
       {Array.from({ length: 4 }).map((_, index) => (
         <CustomCard key={index} contentClassName='p-4'>
           <div className='flex justify-between items-center'>
@@ -14,6 +14,6 @@ export default function LoadingTransaction() {
           <Skeleton className='h-3 w-24 rounded-md mt-1' />
         </CustomCard>
       ))}
-    </>
+    </div>
   );
 }

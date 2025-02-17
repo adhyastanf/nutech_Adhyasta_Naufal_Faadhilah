@@ -31,27 +31,35 @@ function RouteComponent() {
   return (
     <div>
       <h3 className='font-semibold text-xl mb-4'>Semua Transaksi</h3>
-      
-      <div className='space-y-4'>
-        {loading && isEmpty ? (
-          <LoadingTransaction count={limit} /> 
-        ) : isEmpty ? (
-          <IsEmpty message="Maaf tidak ada histori transaksi saat ini" /> 
-        ) : (
-          transactions?.map((transaction, index) => (
-            <CustomCard key={index} contentClassName='p-4'>
-              <HeaderCard type={transaction.transaction_type} amount={transaction.total_amount} description={transaction.description} />
-              <p className='text-black/30 text-xs mt-1'>{formatDate(transaction.created_on)}</p>
-            </CustomCard>
-          ))
-        )}
-      </div>
+
+      <TransactionItem data={transactions} loading={loading} isEmpty={isEmpty} />
 
       {hasMore && !loading && !isEmpty && (
         <Button variant='ghost' className='mt-4 font-bold text-red-500 text-center mx-auto block' onClick={handleShowMore}>
           Show More
         </Button>
       )}
+    </div>
+  );
+}
+
+function TransactionItem({ data, loading, isEmpty }) {
+  if (loading && isEmpty) {
+    return <LoadingTransaction />;
+  }
+
+  if (isEmpty) {
+    return <IsEmpty message='Maaf tidak ada histori transaksi saat ini' />;
+  }
+
+  return (
+    <div className='space-y-4'>
+      {data?.map((transaction, index) => (
+        <CustomCard key={index} contentClassName='p-4'>
+          <HeaderCard type={transaction.transaction_type} amount={transaction.total_amount} description={transaction.description} />
+          <p className='text-black/30 text-xs mt-1'>{formatDate(transaction.created_on)}</p>
+        </CustomCard>
+      ))}
     </div>
   );
 }

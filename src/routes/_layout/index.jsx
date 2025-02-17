@@ -35,58 +35,68 @@ function RouteComponent() {
 
   return (
     <div>
+      <ServicesItem data={services} loading={loadingServices} />
+      <BannerItem data={banners} loading={loadingBanner} />
+    </div>
+  );
+}
+
+function ServicesItem({ data, loading }) {
+  return (
+    <Carousel
+      opts={{
+        align: 'start',
+      }}
+      className='w-full mb-10'
+    >
+      <CarouselContent className='p-0'>
+        {loading ? (
+          <LoadingServices />
+        ) : (
+          data?.map((val, index) => (
+            <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/12'>
+              <Link to={`/services/${val.service_code.toLowerCase()}`}>
+                <div className='p-1'>
+                  <CustomCard contentClassName='p-0'>
+                    <img src={val.service_icon} alt={val.service_name} className='w-full' />
+                  </CustomCard>
+                  <p className='text-center text-xs mt-2'>{val.service_name}</p>
+                </div>
+              </Link>
+            </CarouselItem>
+          ))
+        )}
+      </CarouselContent>
+    </Carousel>
+  );
+}
+
+function BannerItem({ data, loading }) {
+  return (
+    <div>
+      <h2 className='text-xl font-semibold mb-6'>Temukan promo menarik</h2>
       <Carousel
         opts={{
           align: 'start',
         }}
-        className='w-full mb-10'
+        className='w-full'
       >
         <CarouselContent className='p-0'>
-          {loadingServices ? (
-            <LoadingServices />
+          {loading ? (
+            <LoadingBanner />
           ) : (
-            services?.map((val, index) => (
-              <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/12'>
-                <Link to={`/services/${val.service_code.toLowerCase()}`}>
-                  <div className='p-1'>
-                    <CustomCard contentClassName='p-0'>
-                      <img src={val.service_icon} alt={val.service_name} className='w-full' />
-                    </CustomCard>
-                    <p className='text-center text-xs mt-2'>{val.service_name}</p>
-                  </div>
-                </Link>
+            data?.map((val, index) => (
+              <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/4'>
+                <div className='p-1'>
+                  <CustomCard contentClassName='p-0'>
+                    <img src={val.banner_image} alt={val.banner_name} className='w-full' />
+                  </CustomCard>
+                </div>
               </CarouselItem>
             ))
           )}
         </CarouselContent>
       </Carousel>
-
-      <div>
-        <h2 className='text-xl font-semibold mb-6'>Temukan promo menarik</h2>
-
-        <Carousel
-          opts={{
-            align: 'start',
-          }}
-          className='w-full'
-        >
-          <CarouselContent className='p-0'>
-            {loadingBanner ? (
-              <LoadingBanner />
-            ) : (
-              banners?.map((val, index) => (
-                <CarouselItem key={index} className='md:basis-1/2 lg:basis-1/4'>
-                  <div className='p-1'>
-                    <CustomCard contentClassName='p-0'>
-                      <img src={val.banner_image} alt={val.banner_name} className='w-full' />
-                    </CustomCard>
-                  </div>
-                </CarouselItem>
-              ))
-            )}
-          </CarouselContent>
-        </Carousel>
-      </div>
     </div>
   );
 }

@@ -63,7 +63,7 @@ function RouteComponent() {
         {loadingServices ? (
           <ServiceSkeleton />
         ) : (
-          <div className='flex items-center gap-1 mb-10'>
+          <div className='flex items-center gap-4 mb-10'>
             <img src={service?.service_icon} alt={service?.service_name} className='w-12 h-12' />
             <p className='text-sm font-semibold'>{service?.service_name}</p>
           </div>
@@ -81,7 +81,7 @@ function RouteComponent() {
         )}
       </CustomCard>
 
-      <Button className='w-full mt-6' onClick={onSubmit} disabled={loadingBalance?.postTransaction}>
+      <Button className='w-full mt-6 bg-red-500' onClick={onSubmit} disabled={loadingBalance?.postTransaction}>
         {loadingBalance?.postTransaction ? (
           <>
             <Loader2 className='animate-spin' />
