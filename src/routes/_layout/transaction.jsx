@@ -14,18 +14,17 @@ export const Route = createFileRoute('/_layout/transaction')({
 function RouteComponent() {
   const dispatch = useDispatch();
 
-  const [offset, setOffset] = useState(0);
-  const limit = 5;
-
-  const { transactions, loading, hasMore } = useSelector((state) => state.transaction);
+  const { transactions, loading, hasMore, offset = 0, limit = 5 } = useSelector((state) => state.transaction);
 
   const isEmpty = transactions.length === 0;
   useEffect(() => {
-    dispatch(fetchTransactionHistory({ offset, limit }));
-  }, [dispatch, offset]);
+    if (isEmpty) {
+      dispatch(fetchTransactionHistory({ offset, limit }));
+    }
+  }, [transactions, dispatch]);
 
   const handleShowMore = () => {
-    setOffset((prevOffset) => prevOffset + limit);
+    dispatch(fetchTransactionHistory({ offset, limit }));
   };
 
   return (
