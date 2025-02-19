@@ -7,7 +7,7 @@ export default function CustomForm({ form, onSubmit, fields, loading, hideSubmit
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} id='custom-form' className='space-y-8'>
-        {fields.map(({ name, label, placeholder, description, type, icon }) => (
+        {fields.map(({ name, label, placeholder, description, type, icon, disabled = false }) => (
           <FormField
             key={name}
             control={form.control}
@@ -18,7 +18,7 @@ export default function CustomForm({ form, onSubmit, fields, loading, hideSubmit
                 <FormControl>
                   <div className='relative'>
                     {icon && <div className='absolute left-3 top-1/2 -translate-y-1/2 '>{icon}</div>}
-                    <Input type={type} placeholder={placeholder} {...field} className={icon ? 'pl-8' : ''} />
+                    <Input type={type} placeholder={placeholder} disabled={disabled} {...field} className={icon ? 'pl-8' : ''} />
                   </div>
                 </FormControl>
                 {description && <FormDescription>{description}</FormDescription>}

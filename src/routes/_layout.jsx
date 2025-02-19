@@ -74,13 +74,13 @@ function RouteComponent() {
                 title={<p className='text-sm text-white font-light'>Saldo anda</p>}
                 footer={
                   <Button className='text-white text-sm p-0 hover:bg-transparent' variant='ghost' onClick={() => setHide(!hide)}>
-                    Lihat Saldo'
+                    {hide? 'Lihat Saldo' : 'Tutup Saldo'}
                   </Button>
                 }
               >
-                <p className='font-semibold text-white text-2xl'>
+                <p className='font-semibold text-white text-2xl flex items-center'>
                   Rp
-                  {hide ? '.......' : thousandSeparator(balance?.balance)}
+                  {hide ? <span className='text-4xl'>••••••••</span> : thousandSeparator(balance?.balance)}
                 </p>
               </CustomCard>
             )}

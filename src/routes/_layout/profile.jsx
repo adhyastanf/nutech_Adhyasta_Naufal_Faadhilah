@@ -79,9 +79,9 @@ function RouteComponent() {
   }, [loading?.updateProfile, message?.updateProfile, error?.updateProfile, toast, dispatch]);
 
   const fields = [
-    { name: 'email', label: 'Email', placeholder: 'masukkan email anda', type: 'email', icon: <AtSign className='text-black/50' size={16} /> },
-    { name: 'first_name', label: 'Nama Depan', placeholder: 'nama depan', type: 'text', icon: <UserRound className='text-black/50' size={16} /> },
-    { name: 'last_name', label: 'Nama Belakang', placeholder: 'nama belakang', type: 'text', icon: <UserRound className='text-black/50' size={16} /> },
+    { name: 'email', label: 'Email', placeholder: 'masukkan email anda', type: 'email', icon: <AtSign className='text-black/50' size={16} />, disabled: !isEditing },
+    { name: 'first_name', label: 'Nama Depan', placeholder: 'nama depan', type: 'text', icon: <UserRound className='text-black/50' size={16} />, disabled: !isEditing },
+    { name: 'last_name', label: 'Nama Belakang', placeholder: 'nama belakang', type: 'text', icon: <UserRound className='text-black/50' size={16} />, disabled: !isEditing },
   ];
 
   return (
@@ -98,6 +98,7 @@ function RouteComponent() {
         <input type='file' id='fileInput' accept='image/*' className='hidden' {...fileForm.register('file', { onChange: onImageChange })} />
         {fileForm.formState.errors.file && <p className='text-red-500'>{fileForm.formState.errors.file.message}</p>}
       </div>
+      <p className='text-center text-2xl font-semibold'>{profile?.first_name.concat(` ${profile?.last_name}`)}</p>
 
       <CustomForm form={form} onSubmit={onSubmit} fields={fields} loading={loading?.updateProfile} hideSubmit={true} />
 
