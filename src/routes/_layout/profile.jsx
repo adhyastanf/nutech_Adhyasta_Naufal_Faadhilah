@@ -80,8 +80,8 @@ function RouteComponent() {
 
   const fields = [
     { name: 'email', label: 'Email', placeholder: 'masukkan email anda', type: 'email', icon: <AtSign className='text-black/50' size={16} /> },
-    { name: 'first_name', label: 'First Name', placeholder: 'nama depan', type: 'text', icon: <UserRound className='text-black/50' size={16} /> },
-    { name: 'last_name', label: 'Last Name', placeholder: 'nama belakang', type: 'text', icon: <UserRound className='text-black/50' size={16} /> },
+    { name: 'first_name', label: 'Nama Depan', placeholder: 'nama depan', type: 'text', icon: <UserRound className='text-black/50' size={16} /> },
+    { name: 'last_name', label: 'Nama Belakang', placeholder: 'nama belakang', type: 'text', icon: <UserRound className='text-black/50' size={16} /> },
   ];
 
   return (
